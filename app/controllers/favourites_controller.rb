@@ -3,7 +3,8 @@ class FavouritesController < ApplicationController
 
   # GET /favourites
   def index
-    @favourites = Favourite.all
+    @user = User.find(1)
+    @favourites = @user.movies
 
     render json: @favourites
   end
@@ -46,6 +47,6 @@ class FavouritesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def favourite_params
-      params.fetch(:favourite, {})
+      params.permit(:movie_id, :user_id)
     end
 end

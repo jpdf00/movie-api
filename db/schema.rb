@@ -16,12 +16,12 @@ ActiveRecord::Schema.define(version: 2021_08_04_235035) do
   enable_extension "plpgsql"
 
   create_table "favourites", force: :cascade do |t|
-    t.bigint "users_id"
-    t.bigint "movies_id"
+    t.bigint "user_id"
+    t.bigint "movie_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["movies_id"], name: "index_favourites_on_movies_id"
-    t.index ["users_id"], name: "index_favourites_on_users_id"
+    t.index ["movie_id"], name: "index_favourites_on_movie_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
   create_table "movies", force: :cascade do |t|
@@ -46,4 +46,6 @@ ActiveRecord::Schema.define(version: 2021_08_04_235035) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "favourites", "movies"
+  add_foreign_key "favourites", "users"
 end
