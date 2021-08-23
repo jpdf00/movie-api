@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_22_234512) do
+ActiveRecord::Schema.define(version: 2021_08_23_020736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 2021_08_22_234512) do
     t.string "director"
     t.string "photo"
     t.text "plot"
+    t.index ["id"], name: "index_movies_on_id"
   end
 
   create_table "users", force: :cascade do |t|
