@@ -5,7 +5,7 @@ class MoviesController < ApplicationController
   def index
     @movies = Movie.all
 
-    render json: @movies
+    render json: @movies.to_json(include: [:favourites])
   end
 
   # GET /movies/1
