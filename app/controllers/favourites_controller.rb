@@ -6,7 +6,7 @@ class FavouritesController < ApplicationController
     @user = User.find(1)
     @favourites = @user.movies
 
-    render json: @favourites
+    render json: @favourites.to_json(include: [:favourites])
   end
 
   # GET /favourites/1
