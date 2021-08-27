@@ -1,5 +1,5 @@
 class FavouritesController < ApplicationController
-  before_action :set_favourite, only: [:show, :update, :destroy]
+  before_action :set_favourite, only: %i[show update destroy]
 
   # GET /favourites
   def index
@@ -40,13 +40,14 @@ class FavouritesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_favourite
-      @favourite = Favourite.find(params[:id])
-    end
 
-    # Only allow a trusted parameter "white list" through.
-    def favourite_params
-      params.permit(:movie_id, :user_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_favourite
+    @favourite = Favourite.find(params[:id])
+  end
+
+  # Only allow a trusted parameter "white list" through.
+  def favourite_params
+    params.permit(:movie_id, :user_id)
+  end
 end

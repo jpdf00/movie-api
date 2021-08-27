@@ -12,83 +12,83 @@ require 'rails_helper'
 # of tools you can use to make these specs even more expressive, but we're
 # sticking to rails and rspec-rails APIs to keep things simple and stable.
 
-RSpec.describe "/movies", type: :request do
+RSpec.describe '/movies', type: :request do
   # This should return the minimal set of attributes required to create a valid
   # Movie. As you add validations to Movie, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    { title: "Movie 1", runtime: 111 }
-  }
+  let(:valid_attributes) do
+    { title: 'Movie 1', runtime: 111 }
+  end
 
-  let(:invalid_attributes) {
-    {title: 111, runtime: "text"}
-  }
+  let(:invalid_attributes) do
+    { title: 111, runtime: 'text' }
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
   # MoviesController, or in your router and rack
   # middleware. Be sure to keep this updated too.
-  let(:valid_headers) {
+  let(:valid_headers) do
     {}
-  }
+  end
 
-  describe "GET /index" do
-    it "renders a successful response" do
+  describe 'GET /index' do
+    it 'renders a successful response' do
       Movie.create! valid_attributes
       get movies_url, headers: valid_headers, as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "GET /show" do
-    it "renders a successful response" do
+  describe 'GET /show' do
+    it 'renders a successful response' do
       movie = Movie.create! valid_attributes
       get movie_url(movie), as: :json
       expect(response).to be_successful
     end
   end
 
-  describe "POST /create" do
-    context "with valid parameters" do
-      it "creates a new Movie" do
-        expect {
+  describe 'POST /create' do
+    context 'with valid parameters' do
+      it 'creates a new Movie' do
+        expect do
           post movies_url,
                params: valid_attributes, headers: valid_headers, as: :json
-        }.to change(Movie, :count).by(1)
+        end.to change(Movie, :count).by(1)
       end
 
-      it "renders a JSON response with the new movie" do
+      it 'renders a JSON response with the new movie' do
         post movies_url,
              params: valid_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "does not create a new Movie" do
-        expect {
+    context 'with invalid parameters' do
+      it 'does not create a new Movie' do
+        expect do
           post movies_url,
                params: { movie: invalid_attributes }, as: :json
-        }.to change(Movie, :count).by(0)
+        end.to change(Movie, :count).by(0)
       end
 
-      it "renders a JSON response with errors for the new movie" do
+      it 'renders a JSON response with errors for the new movie' do
         post movies_url,
              params: { movie: invalid_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "PATCH /update" do
-    context "with valid parameters" do
-      let(:new_attributes) {
-        {title: "Movie2"}
-      }
+  describe 'PATCH /update' do
+    context 'with valid parameters' do
+      let(:new_attributes) do
+        { title: 'Movie2' }
+      end
 
-      it "updates the requested movie" do
+      it 'updates the requested movie' do
         movie = Movie.create! valid_attributes
         patch movie_url(movie),
               params: { movie: new_attributes }, headers: valid_headers, as: :json
@@ -96,32 +96,32 @@ RSpec.describe "/movies", type: :request do
         expect(response).to have_http_status(:ok)
       end
 
-      it "renders a JSON response with the movie" do
+      it 'renders a JSON response with the movie' do
         movie = Movie.create! valid_attributes
         patch movie_url(movie),
               params: { movie: new_attributes }, headers: valid_headers, as: :json
         expect(response).to have_http_status(:ok)
-        expect(response.content_type).to match(a_string_including("application/json"))
+        expect(response.content_type).to match(a_string_including('application/json'))
       end
     end
 
-    context "with invalid parameters" do
-      it "renders a JSON response with errors for the movie" do
+    context 'with invalid parameters' do
+      it 'renders a JSON response with errors for the movie' do
         movie = Movie.create! valid_attributes
         patch movie_url(movie),
               params: invalid_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to eq('application/json')
       end
     end
   end
 
-  describe "DELETE /destroy" do
-    it "destroys the requested movie" do
+  describe 'DELETE /destroy' do
+    it 'destroys the requested movie' do
       movie = Movie.create! valid_attributes
-      expect {
+      expect do
         delete movie_url(movie), headers: valid_headers, as: :json
-      }.to change(Movie, :count).by(-1)
+      end.to change(Movie, :count).by(-1)
     end
   end
 end
