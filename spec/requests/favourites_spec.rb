@@ -17,12 +17,17 @@ RSpec.describe "/favourites", type: :request do
   # Favourite. As you add validations to Favourite, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    { user_id: 1, movie_id: 1 }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { user_id: 2, movie_id: 2 }
   }
+
+  before(:all) do
+    @user = create(:user)
+    @movie = create(:movie)
+  end
 
   # This should return the minimal set of values that should be in the headers
   # in order to pass any filters (e.g. authentication) defined in
@@ -53,13 +58,13 @@ RSpec.describe "/favourites", type: :request do
       it "creates a new Favourite" do
         expect {
           post favourites_url,
-               params: { favourite: valid_attributes }, headers: valid_headers, as: :json
+               params: valid_attributes, headers: valid_headers, as: :json
         }.to change(Favourite, :count).by(1)
       end
 
       it "renders a JSON response with the new favourite" do
         post favourites_url,
-             params: { favourite: valid_attributes }, headers: valid_headers, as: :json
+             params: valid_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:created)
         expect(response.content_type).to match(a_string_including("application/json"))
       end
@@ -69,13 +74,13 @@ RSpec.describe "/favourites", type: :request do
       it "does not create a new Favourite" do
         expect {
           post favourites_url,
-               params: { favourite: invalid_attributes }, as: :json
+               params: invalid_attributes, as: :json
         }.to change(Favourite, :count).by(0)
       end
 
       it "renders a JSON response with errors for the new favourite" do
         post favourites_url,
-             params: { favourite: invalid_attributes }, headers: valid_headers, as: :json
+             params: invalid_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
@@ -85,7 +90,7 @@ RSpec.describe "/favourites", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { user_id: 1, movie_id: 1 }
       }
 
       it "updates the requested favourite" do
@@ -93,7 +98,7 @@ RSpec.describe "/favourites", type: :request do
         patch favourite_url(favourite),
               params: { favourite: new_attributes }, headers: valid_headers, as: :json
         favourite.reload
-        skip("Add assertions for updated state")
+        expect(response).to have_http_status(:ok)
       end
 
       it "renders a JSON response with the favourite" do
@@ -109,7 +114,7 @@ RSpec.describe "/favourites", type: :request do
       it "renders a JSON response with errors for the favourite" do
         favourite = Favourite.create! valid_attributes
         patch favourite_url(favourite),
-              params: { favourite: invalid_attributes }, headers: valid_headers, as: :json
+              params: invalid_attributes, headers: valid_headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
         expect(response.content_type).to eq("application/json")
       end
