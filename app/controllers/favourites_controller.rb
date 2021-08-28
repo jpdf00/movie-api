@@ -46,7 +46,7 @@ class FavouritesController < ApplicationController
     @favourite = Favourite.find(params[:id])
   end
 
-  # Only allow a trusted parameter "white list" through.
+  # Only allow a trusted parameter "allowlist" through.
   def favourite_params
     params.permit(:movie_id, :user_id)
   end
