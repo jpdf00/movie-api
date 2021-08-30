@@ -46,6 +46,10 @@ Movie params are:
 - user_id: integer(user functionality is not implemented yet, use 1)
 - movie_id: integer
 
+## Documentation
+
+- See [API Documentation with Postman.](https://documenter.getpostman.com/view/17032921/TzzHnZHi)
+
 ## Built With
 
 - Ruby
